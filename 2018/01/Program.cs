@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace _01
 {
@@ -8,17 +10,34 @@ namespace _01
         static void Main(string[] args)
         {
             int currentFrequency = 0;
-            string line;
 
-            var fileLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
+            var inputFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\input.txt").Select(x => int.Parse(x)).ToList();
+            List<int> frequencysFound = new List<int>();
 
+            int i = 0;
+            while (true)
+            {
+                currentFrequency += inputFile[i];
 
-            StreamReader inputFile = new StreamReader(Directory.GetCurrentDirectory() + @"\input.txt");  
-            while((line = inputFile.ReadLine()) != null)  
-            {  
-                int frequencyChange = int.Parse(line); 
-                currentFrequency += frequencyChange;
-            } 
+                if (frequencysFound.Contains(currentFrequency))
+                {
+                    //we found our duplicate frequency
+                    break;
+                }
+                else
+                {
+                    frequencysFound.Add(currentFrequency);
+                }
+
+                //when end of list is reached, start from the beginning
+                if (i == inputFile.Count - 1)
+                {
+                    i = 0;
+                    continue;
+                }
+
+                i++;
+            }
 
             Console.WriteLine(currentFrequency.ToString());
             Console.Read();
