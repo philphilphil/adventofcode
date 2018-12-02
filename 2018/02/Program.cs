@@ -9,6 +9,57 @@ namespace _02
     {
         static void Main(string[] args)
         {
+            GetBoxChecksum();
+            GetCorrectBoxId();
+            Console.Read();
+        }
+
+        private static void GetCorrectBoxId()
+        {
+            var inputFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\input.txt").ToList();
+            string foundBoxId = "";
+
+            foreach (string boxId in inputFile)
+            {
+                if (!String.IsNullOrEmpty(foundBoxId)) break;
+
+                var idChars = boxId.ToCharArray();
+                int differenceLocation = 0;
+
+                //compare to all other strings but itself
+                foreach (string otherBoxId in inputFile)
+                {
+                    if (otherBoxId == boxId) continue;
+
+                    //itterate through all chars and check if more than 1 difference
+                    int i = 0;
+                    int differencesFound = 0;
+
+                    foreach (char c in otherBoxId)
+                    {
+                        if (c != idChars[i])
+                        {
+                            differencesFound++;
+                            differenceLocation = i;
+                        };
+
+                        if (differencesFound > 1) break;
+                        i++;
+                    }
+
+                    //found the one
+                    if (differencesFound == 1)
+                    {
+                        foundBoxId = boxId.Remove(differenceLocation, 1);
+                    }
+                }
+            }
+
+            Console.WriteLine(foundBoxId);
+        }
+
+        private static void GetBoxChecksum()
+        {
             Dictionary<char, int> letterCounts;
             int twoFound = 0;
             int threeFound = 0;
@@ -38,10 +89,9 @@ namespace _02
                 if (anyWithThreeFound) threeFound++;
             }
 
-           // Console.
+            // Console.
 
             Console.WriteLine(twoFound * threeFound);
-            Console.Read();
         }
     }
 }
