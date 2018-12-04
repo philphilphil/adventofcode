@@ -36,6 +36,7 @@ namespace _04
                     Guard g = new Guard();
                     g.Id = activeGuardId;
                     g.DayAndTimeAsleep = new Dictionary<int, List<int>>();
+                    g.MinuteAmountSleep = new Dictionary<int, int>();
                     guardInfos.Add(g);
                 }
 
@@ -53,33 +54,23 @@ namespace _04
                         if (!g.DayAndTimeAsleep.ContainsKey(log.Day))
                             g.DayAndTimeAsleep.Add(log.Day, new List<int>());
 
+                        if (!g.MinuteAmountSleep.ContainsKey(minuteFellAsleep))
+                            g.MinuteAmountSleep.Add(minuteFellAsleep, 0);
+
                         g.DayAndTimeAsleep[log.Day].Add(minuteFellAsleep);
-                        g.TotalMinuesAsleep++;
+                        g.MinuteAmountSleep[minuteFellAsleep]++;
+
+                        g.TotalMinutesAsleep++;
                     }
                 }
             }
 
-            var mostAsleepGuard = guardInfos.OrderByDescending(x => x.TotalMinuesAsleep).First();
+            var mostAsleepGuard = guardInfos.OrderByDescending(x => x.TotalMinutesAsleep).First();
+            int mostAsleepMinute = mostAsleepGuard.MinuteAmountSleep.OrderByDescending(x => x.Value).ThenByDescending(x => x.Key).Select(x => x.Key).First();
 
-            //find most minute asleep
-            Dictionary<int, int> minuteAsleepCount = new Dictionary<int, int>();
-
-            foreach (var d in mostAsleepGuard.DayAndTimeAsleep)
-            {
-                foreach (var m in d.Value)
-                {
-
-                    if (!minuteAsleepCount.ContainsKey(m))
-                        minuteAsleepCount.Add(m, 0);
-
-                    minuteAsleepCount[m]++;
-                }
-            }
-
-            int mostAsleepMinute = minuteAsleepCount.OrderByDescending(x => x.Value).Select(x => x.Key).First();
-
-            Console.WriteLine(String.Format(" Guard #{0} was asleep {1} minutes and mostly during minute {2}", mostAsleepGuard.Id, mostAsleepGuard.TotalMinuesAsleep, mostAsleepMinute));
+            Console.WriteLine(String.Format(" Guard #{0} was asleep {1} minutes and mostly during minute {2}", mostAsleepGuard.Id, mostAsleepGuard.TotalMinutesAsleep, mostAsleepMinute));
             Console.WriteLine("Answer: " + (mostAsleepGuard.Id * mostAsleepMinute).ToString());
+
         }
 
         private static List<LogEntry> GetLogEntries()
@@ -130,6 +121,7 @@ namespace _04
     {
         public int Id { get; set; }
         public Dictionary<int, List<int>> DayAndTimeAsleep { get; set; }
-        public int TotalMinuesAsleep { get; set; }
+        public Dictionary<int, int> MinuteAmountSleep { get; set; }
+        public int TotalMinutesAsleep { get; set; }
     }
 }
