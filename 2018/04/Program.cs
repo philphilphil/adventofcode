@@ -71,6 +71,24 @@ namespace _04
             Console.WriteLine(String.Format(" Guard #{0} was asleep {1} minutes and mostly during minute {2}", mostAsleepGuard.Id, mostAsleepGuard.TotalMinutesAsleep, mostAsleepMinute));
             Console.WriteLine("Answer: " + (mostAsleepGuard.Id * mostAsleepMinute).ToString());
 
+            //Part 2
+            int maxGuardId = 0;
+            int maxMinuteSleep = 0;
+            int maxMinuteSleepAmount = 0;
+
+            foreach (Guard g in guardInfos)
+            {
+                foreach (var min in g.MinuteAmountSleep)
+                {
+                    if (min.Value > maxMinuteSleepAmount)
+                    {
+                        maxMinuteSleepAmount = min.Value;
+                        maxMinuteSleep = min.Key;
+                        maxGuardId = g.Id;
+                    }
+                }
+            }
+            Console.WriteLine("Answer 2: " + (maxGuardId * maxMinuteSleep).ToString());
         }
 
         private static List<LogEntry> GetLogEntries()
