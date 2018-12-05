@@ -11,10 +11,32 @@ namespace _05
         {
             char[] inputFile = File.ReadAllText(Directory.GetCurrentDirectory() + @"\input.txt").ToCharArray();
 
+            //Part 1
             int answer1 = ReactPolymer(inputFile);
 
+            //Part 2
+            Dictionary<char, int> unitTypes = GenerateUnitTypeDict();
+            int answer2 = GetShortestReactedPolymer(inputFile, unitTypes);
+
             Console.WriteLine(answer1);
+            Console.WriteLine(answer2);
             Console.Read();
+        }
+
+        private static int GetShortestReactedPolymer(char[] inputFile, Dictionary<char, int> unitTypes)
+        {
+            Dictionary<char, int> reactedUnitTypes = new Dictionary<char, int>();
+            foreach (var item in unitTypes)
+            {
+                if (inputFile.Contains(item.Key))
+                {
+                    //remove all instances of this from the input
+                    var cleanedInput = inputFile.Where((val, id) => val != item.Key && val != Char.ToUpper(item.Key)).ToArray();
+                    reactedUnitTypes.Add(item.Key, ReactPolymer(cleanedInput));
+                }
+            }
+
+            return reactedUnitTypes.Where(x => x.Value != 0).OrderBy(x => x.Value).Select(x => x.Value).First();
         }
 
         private static int ReactPolymer(char[] inputFile)
@@ -58,6 +80,18 @@ namespace _05
             }
 
             return inputFile.Length;
+        }
+
+        private static Dictionary<char, int> GenerateUnitTypeDict()
+        {
+            Dictionary<char, int> d = new Dictionary<char, int>();
+            string allUnitTypes = "abcdefghijklmnopqrstuvwxyz";
+
+            foreach (char c in allUnitTypes)
+            {
+                d.Add(c, 0);
+            }
+            return d;
         }
     }
 }
