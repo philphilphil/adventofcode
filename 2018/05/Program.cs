@@ -11,12 +11,20 @@ namespace _05
         {
             char[] inputFile = File.ReadAllText(Directory.GetCurrentDirectory() + @"\input.txt").ToCharArray();
 
+            int answer1 = ReactPolymer(inputFile);
+
+            Console.WriteLine(answer1);
+            Console.Read();
+        }
+
+        private static int ReactPolymer(char[] inputFile)
+        {
             int i = 0;
             int endOfFile = inputFile.Length;
             while (true)
             {
                 //if entire file was searched and none was found we are done
-                if (i != 0 && i == inputFile.Length-1)
+                if (i != 0 && i == inputFile.Length - 1)
                     break;
 
                 var currentChar = inputFile[i];
@@ -49,8 +57,7 @@ namespace _05
                 i++;
             }
 
-            Console.WriteLine(inputFile.Length);
-            Console.Read();
+            return inputFile.Length;
         }
     }
 }
