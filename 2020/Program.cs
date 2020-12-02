@@ -7,6 +7,9 @@ namespace AdventOfCode2020
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            var one = new Day1();
+            one.GetResults();
         }
     }
 }
