@@ -8,7 +8,7 @@ namespace AdventOfCode2020
         {
             Console.WriteLine("Hello World!");
 
-            var task = new Day3();
+            var task = new Day4();
             task.GetResults();
         }
     }
