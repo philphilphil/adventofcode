@@ -112,19 +112,19 @@ namespace AdventOfCode2020
                         valid = CheckSpecial_hgt(keyValue[1]);
                         break;
                     case "hcl":
-                        valid = CheckWithRegex(keyValue[1], @"#[0-9a-f]{6}");
+                        valid = CheckWithRegex(keyValue[1], @"^#[0-9a-f]{6}$");
                         break;
                     case "ecl":
-                        valid = CheckWithRegex(keyValue[1], @"(amb|blu|brn|gry|grn|hzl|oth)");
+                        valid = CheckWithRegex(keyValue[1], @"^(amb|blu|brn|gry|grn|hzl|oth)$");
                         break;
                     case "pid":
-                        valid = CheckWithRegex(keyValue[1], @"\d{9}");
+                        valid = CheckWithRegex(keyValue[1], @"^\d{9}$");
                         break;
                     default:
                         break;
                 }
-
-                Console.WriteLine(String.Format("Checking: {0} key: {1} value {2}", valid.ToString(), keyValue[0], keyValue[1]));
+                if (valid)
+                    Console.WriteLine(String.Format("Checking: {0} key: {1} value {2}", valid.ToString(), keyValue[0], keyValue[1]));
 
                 if (!valid)
                     return false;
@@ -135,7 +135,7 @@ namespace AdventOfCode2020
 
         private bool CheckSpecial_hgt(string value)
         {
-            var regexResult = Regex.Match(value, @"(\d+)(cm|in)");
+            var regexResult = Regex.Match(value, @"^(\d+)(cm|in)$");
 
             if (!regexResult.Success)
                 return false;
