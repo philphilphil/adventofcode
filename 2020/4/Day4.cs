@@ -18,7 +18,7 @@ namespace AdventOfCode2020
         {
             GetResultPart1();
             Console.WriteLine();
-            // GetResultPart2();
+            GetResultPart2();
             Console.WriteLine();
             Console.WriteLine();
         }
@@ -54,7 +54,7 @@ namespace AdventOfCode2020
                 if (ppFields.All(pp.Contains))
                     validPassports++;
             }
-            
+
             Console.Write(String.Format("Part 1 valid passports: {0}", validPassports.ToString()));
         }
 
@@ -74,53 +74,90 @@ namespace AdventOfCode2020
 
         private void GetResultPart2()
         {
-            //Right 1, down 1.
-            //Right 3, down 1. (This is the slope you already checked.)           
-            //Right 5, down 1.
-            //Right 7, down 1.
-            //Right 1, down 2.
-            List<long> slopeResults = new List<long>();
-            List<Tuple<int, int>> slopes = new List<Tuple<int, int>>();
-            slopes.Add(new Tuple<int, int>(1, 1));
-            slopes.Add(new Tuple<int, int>(3, 1));
-            slopes.Add(new Tuple<int, int>(5, 1));
-            slopes.Add(new Tuple<int, int>(7, 1));
-            slopes.Add(new Tuple<int, int>(1, 2));
+            int validPassports = 0;
+            var passports = GetPassportsFromInput();
+            var ppValidationFields = GetPassportValidationFields();
 
-            foreach (var slope in slopes)
+            foreach (var pp in passports)
             {
-                int pos = 0;
-                int trees = 0;
-                int currentLine = 0;
 
-                foreach (string checkLine in Input)
+                if (ppValidationFields.All(pp.Contains) && ValidatePassportFields(pp))
+                    validPassports++;
+            }
+
+            Console.Write(String.Format("Part 2 valid passports: {0}", validPassports.ToString()));
+        }
+
+        private bool ValidatePassportFields(string pp)
+        {
+            var fields = pp.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var field in fields)
+            {
+                var keyValue = field.Split(':');
+                var valid = true;
+
+                switch (keyValue[0])
                 {
-
-                    if (currentLine % slope.Item2 != 0)
-                    {
-                        currentLine++;
-                        continue;
-                    }
-
-                    currentLine++;
-                    List<char> chars = checkLine.ToCharArray().ToList();
-
-                    int originalPos = pos;
-                    if (chars.Count <= pos) //reset the pos, strings are the same
-                    {
-                        pos = pos % chars.Count;
-                    }
-
-                    if (chars[pos] == '#')
-                        trees++;
-
-                    pos = originalPos + slope.Item1;
+                    case "byr":
+                        valid = CheckNumberRange(keyValue[1], 1920, 2002);
+                        break;
+                    case "iyr":
+                        valid = CheckNumberRange(keyValue[1], 2010, 2020);
+                        break;
+                    case "eyr":
+                        valid = CheckNumberRange(keyValue[1], 2020, 2030);
+                        break;
+                    case "hgt":
+                        valid = CheckSpecial_hgt(keyValue[1]);
+                        break;
+                    case "hcl":
+                        valid = CheckWithRegex(keyValue[1], @"#[0-9a-f]{6}");
+                        break;
+                    case "ecl":
+                        valid = CheckWithRegex(keyValue[1], @"(amb|blu|brn|gry|grn|hzl|oth)");
+                        break;
+                    case "pid":
+                        valid = CheckWithRegex(keyValue[1], @"\d{9}");
+                        break;
+                    default:
+                        break;
                 }
 
-                slopeResults.Add((uint)trees);
+                Console.WriteLine(String.Format("Checking: {0} key: {1} value {2}", valid.ToString(), keyValue[0], keyValue[1]));
+
+                if (!valid)
+                    return false;
             }
-            long calc = slopeResults[0] * slopeResults[1] * slopeResults[2] * slopeResults[3] * slopeResults[4];
-            Console.Write(String.Format("Part 2 result: {0}", calc.ToString()));
+
+            return true;
+        }
+
+        private bool CheckSpecial_hgt(string value)
+        {
+            var regexResult = Regex.Match(value, @"(\d+)(cm|in)");
+
+            if (!regexResult.Success)
+                return false;
+
+            var number = int.Parse(regexResult.Groups[1].Value);
+            var unit = regexResult.Groups[2].Value;
+
+            return (unit == "cm" && number >= 150 && number <= 193) || (unit == "in" && number >= 59 && number <= 76);
+        }
+
+        private bool CheckWithRegex(string value, string regex)
+        {
+            return Regex.Match(value, regex, RegexOptions.IgnoreCase).Success;
+        }
+
+        private bool CheckNumberRange(string value, int min, int max)
+        {
+            int valueAsInt;
+            if (!int.TryParse(value, out valueAsInt))
+                return false;
+
+            return valueAsInt >= min && valueAsInt <= max;
         }
     }
 }
