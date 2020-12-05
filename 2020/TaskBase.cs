@@ -12,7 +12,7 @@ namespace AdventOfCode2020
 
         public void ReadInput(int day)
         {
-            var path = "../../../" + day.ToString() + "/input";
+            var path = day.ToString() + "/input";
             if (!File.Exists(path))
             {
                 throw new FileNotFoundException();
