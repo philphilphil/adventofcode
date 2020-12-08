@@ -36,7 +36,6 @@ namespace AdventOfCode2020
 
                 cmdsExcecuted.Add(i);
 
-                //maybe regex is simpler?
                 var match = Regex.Match(Input[i], pattern);
                 var instruction = match.Groups[1].Value;
                 var opp = match.Groups[2].Value;
@@ -48,20 +47,15 @@ namespace AdventOfCode2020
                         globalAccumulator = CalculateNumber(globalAccumulator, opp, value);
                         break;
                     case "jmp":
-                        i = CalculateNumber(i, opp, value)-1;
+                        i = CalculateNumber(i, opp, value) - 1;
                         break;
                     case "nop":
                         continue;
                     default:
                         break;
                 }
-
-                //Console.WriteLine(instruction + "       " + value + "       " + opp + "       ");
-
             }
-
             Console.Write(String.Format("Part 1 global accumulator is {0}", globalAccumulator));
-
         }
 
         private int CalculateNumber(int number, string opp, int value)
@@ -80,20 +74,81 @@ namespace AdventOfCode2020
 
         public void GetResultPart2()
         {
-            // foreach (var a in Input)
-            // {
-            //     foreach (var b in Input)
-            //     {
-            //         foreach (var c in Input)
-            //         {
-            //             if (int.Parse(a) + int.Parse(b) + int.Parse(c) == 2020)
-            //             {
-            //                 Console.Write(String.Format("Its {0} and {1}, multiplied thei are {2}", a, b, int.Parse(a) * int.Parse(b) * int.Parse(c)));
-            //                 return;
-            //             }
-            //         }
-            //     }
-            // }
+            string pattern = @"(jmp|acc|nop) (\+|-)(\d*)";
+            int result = 0;
+
+
+            for (int i = 0; i < Input.Count; i++)
+            {
+                var match = Regex.Match(Input[i], pattern);
+                var instruction = match.Groups[1].Value;
+                var opp = match.Groups[2].Value;
+                var value = int.Parse(match.Groups[3].Value);
+
+                switch (instruction)
+                {
+                    case "acc":
+                        continue;
+                    case "jmp":
+                        result = RunBootCodeWithChangedParameter(i, "nop");
+                        break;
+                    case "nop":
+                        result = RunBootCodeWithChangedParameter(i, "jmp");
+                        break;
+                    default:
+                        break;
+                }
+
+                if (result != 0)
+                    Console.Write(String.Format("Part 2 global accumulator is {0}", result));
+
+            }
+        }
+
+        private int RunBootCodeWithChangedParameter(int switchInstructionLnie, string newInstruction)
+        {
+            int globalAccumulator = 0;
+            string pattern = @"(jmp|acc|nop) (\+|-)(\d*)";
+            List<int> cmdsExcecuted = new List<int>();
+
+            for (int i = 0; i < Input.Count; i++)
+            {
+                if (i == Input.Count - 1) //end reached
+                {
+                    return globalAccumulator;
+                }
+                else if (cmdsExcecuted.Count > Input.Count)
+                {
+                    return 0; //reached loop, break
+                }
+
+
+                cmdsExcecuted.Add(i);
+
+                var match = Regex.Match(Input[i], pattern);
+                var instruction = match.Groups[1].Value;
+                var opp = match.Groups[2].Value;
+                var value = int.Parse(match.Groups[3].Value);
+
+                if (i == switchInstructionLnie)
+                    instruction = newInstruction;
+
+                switch (instruction)
+                {
+                    case "acc":
+                        globalAccumulator = CalculateNumber(globalAccumulator, opp, value);
+                        break;
+                    case "jmp":
+                        i = CalculateNumber(i, opp, value) - 1;
+                        break;
+                    case "nop":
+                        continue;
+                    default:
+                        break;
+                }
+            }
+
+            return 0;
         }
     }
 }
