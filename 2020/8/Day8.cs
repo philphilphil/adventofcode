@@ -48,7 +48,7 @@ namespace AdventOfCode2020
                         globalAccumulator = CalculateNumber(globalAccumulator, opp, value);
                         break;
                     case "jmp":
-                        i = CalculateNumber(i, opp, value);
+                        i = CalculateNumber(i, opp, value)-1;
                         break;
                     case "nop":
                         continue;
