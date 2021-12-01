@@ -12,6 +12,8 @@ namespace AdventOfCode2021
 
         public List<long> InputAsLong { get; set; }
 
+        public List<int> InputAsInt { get; set; }
+
         public void ReadInput(int day)
         {
             var path = day.ToString() + "/input";
@@ -22,13 +24,13 @@ namespace AdventOfCode2021
             Input = File.ReadAllLines(path).ToList();
         }
 
-        public void InputToLong()
+        public void InputToInt()
         {
-            InputAsLong = new List<long>();
+            InputAsInt = new List<int>();
 
             foreach (var item in Input)
             {
-                InputAsLong.Add(long.Parse(item));
+                InputAsInt.Add(int.Parse(item));
             }
         }
     }
