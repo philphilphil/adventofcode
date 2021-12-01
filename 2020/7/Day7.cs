@@ -59,7 +59,7 @@ namespace AdventOfCode2020
                     _myBagCount++;
             }
 
-            Console.WriteLine("My {0} can be inside {1} other bags", _myBag, _myBagCount);
+            Console.WriteLine("Part 1: My {0} can be inside {1} other bags", _myBag, _myBagCount);
         }
 
         private Bag GetBag(string v)
@@ -92,14 +92,35 @@ namespace AdventOfCode2020
 
         public void GetResultPart2()
         {
-
+            var shinyGoldBag = _bags.Where(x => x.Name == _myBag).FirstOrDefault();
+            Console.WriteLine("Part 2: My {0} bag contains {1} other bags", _myBag, shinyGoldBag.TotalContainingBags);
         }
+
     }
+
+
 
     class Bag
     {
         public string Name { get; set; }
 
+        public int Quantity {get;set;}
+
         public Dictionary<Bag, int> InnerBags { get; set; }
+
+        public int TotalContainingBags
+        {
+            get
+            {
+                if (InnerBags != null)
+                    // foreach (var b in InnerBags)
+                    // {
+                    //     return b.Value + (b.Value * b.Key.InnerBags.Sum(x => x.Key.TotalContainingBags));
+                    // }
+                    return InnerBags.Sum(x => x.Value) + InnerBags.Sum(x => x.Value) * InnerBags.Sum(x => x.Key.TotalContainingBags);
+
+                return 0;
+            }
+        }
     }
 }
