@@ -20,7 +20,7 @@ namespace AdventOfCode2021
             GetResultPart2();
         }
 
-        public void GetResultPart1()
+        public new void GetResultPart1()
         {
             int prevMeasurement = InputAsInt[0];
             int increasedCounter = 0;
@@ -36,7 +36,7 @@ namespace AdventOfCode2021
             Console.WriteLine(String.Format("It increased {0} times", increasedCounter));
         }
 
-        public void GetResultPart2()
+        public new void GetResultPart2()
         {
             List<int> slideWindowSums = new List<int>();
 

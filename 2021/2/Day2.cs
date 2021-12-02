@@ -19,7 +19,7 @@ namespace AdventOfCode2021
             GetResultPart2();
         }
 
-        public void GetResultPart1()
+        public new void GetResultPart1()
         {
             int horizontalPos = 0;
             int depth = 0;
@@ -48,7 +48,7 @@ namespace AdventOfCode2021
             Console.WriteLine(String.Format("Answer: {0}", horizontalPos * depth));
         }
 
-        public void GetResultPart2()
+        public new void GetResultPart2()
         {
             int horizontalPos = 0;
             int depth = 0;

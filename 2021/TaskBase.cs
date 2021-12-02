@@ -8,9 +8,9 @@ namespace AdventOfCode2021
 {
     class TaskBase
     {
-        public List<string> InputAsString { get; set; }
-        public List<long> InputAsLong { get; set; }
-        public List<int> InputAsInt { get; set; }
+        public List<string> InputAsString { get; set; } = new List<string>();
+        public List<long> InputAsLong { get; set; } = new List<long>();
+        public List<int> InputAsInt { get; set; } = new List<int>();
 
         public void ReadInput(int day)
         {
