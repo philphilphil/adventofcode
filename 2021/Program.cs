@@ -6,7 +6,7 @@ namespace AdventOfCode2021
     {
         static void Main(string[] args)
         {
-            var task = new Day1();
+            var task = new Day2();
             task.GetResults();
         }
     }
