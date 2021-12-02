@@ -24,7 +24,7 @@ namespace AdventOfCode2021
             int horizontalPos = 0;
             int depth = 0;
 
-            foreach (string command in Input)
+            foreach (string command in InputAsString)
             {
                 string cmd = command.Split(" ")[0];
                 int amount = int.Parse(command.Split(" ")[1]);
@@ -54,7 +54,7 @@ namespace AdventOfCode2021
             int depth = 0;
             int aim = 0;
 
-            foreach (string command in Input)
+            foreach (string command in InputAsString)
             {
                 string cmd = command.Split(" ")[0];
                 int amount = int.Parse(command.Split(" ")[1]);

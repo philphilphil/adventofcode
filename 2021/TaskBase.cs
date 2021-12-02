@@ -8,10 +8,8 @@ namespace AdventOfCode2021
 {
     class TaskBase
     {
-        public List<string> Input { get; set; }
-
+        public List<string> InputAsString { get; set; }
         public List<long> InputAsLong { get; set; }
-
         public List<int> InputAsInt { get; set; }
 
         public void ReadInput(int day)
@@ -21,17 +19,38 @@ namespace AdventOfCode2021
             {
                 throw new FileNotFoundException();
             }
-            Input = File.ReadAllLines(path).ToList();
+            InputAsString = File.ReadAllLines(path).ToList();
         }
 
         public void InputToInt()
         {
             InputAsInt = new List<int>();
 
-            foreach (var item in Input)
+            foreach (var item in InputAsString)
             {
                 InputAsInt.Add(int.Parse(item));
             }
+        }
+
+
+        public void InputToLong()
+        {
+            InputAsLong = new List<long>();
+
+            foreach (var item in InputAsString)
+            {
+                InputAsLong.Add(long.Parse(item));
+            }
+        }
+
+        public void GetResultPart1()
+        {
+
+        }
+
+        public void GetResultPart2()
+        {
+
         }
     }
 }
