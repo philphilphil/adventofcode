@@ -8,6 +8,9 @@ namespace AdventOfCode2021
 {
     class Day3 : TaskBase
     {
+
+        private int InputCharacterLenght { get; set; } = 12;
+
         public Day3()
         {
             base.ReadInput(3);
@@ -24,7 +27,7 @@ namespace AdventOfCode2021
             string gammaRateBinary = "";
             string epsilonRateBinary = "";
 
-            for (int i = 0; i < InputAsString[0].Length; i++)
+            for (int i = 0; i < InputCharacterLenght; i++)
             {
                 int amountZero = InputAsString.Where(x => x.Substring(i, 1) == "0").Count();
                 int amountOne = InputAsString.Where(x => x.Substring(i, 1) == "1").Count();
@@ -57,21 +60,13 @@ namespace AdventOfCode2021
             List<string> InputAsStringCopy = InputAsString;
 
             //find oxygen rating
-            for (int i = 0; i < InputAsString[0].Length; i++)
+            for (int i = 0; i < InputCharacterLenght; i++)
             {
-                InputAsString = CleanListAtPos(InputAsString, i, true);
+                if (InputAsString.Count != 1)
+                    InputAsString = CleanListAtPos(InputAsString, i, true);
 
-                if (InputAsString.Count == 1)
-                    break;
-            }
-
-            //find co2 scrubber rating
-            for (int i = 0; i < InputAsStringCopy[0].Length; i++)
-            {
-                InputAsStringCopy = CleanListAtPos(InputAsStringCopy, i, false);
-
-                if (InputAsStringCopy.Count == 1)
-                    break;
+                if (InputAsStringCopy.Count != 1)
+                    InputAsStringCopy = CleanListAtPos(InputAsStringCopy, i, false);
             }
 
             string oxygenRatingBinary = InputAsString[0];
