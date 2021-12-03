@@ -89,26 +89,21 @@ namespace AdventOfCode2021
 
         private List<string> CleanListAtPos(List<string> list, int i, bool oxygen)
         {
-            var cleanedList = new List<string>();
+            List<string> zeroes = list.Where(x => x.Substring(i, 1) == "0").ToList();
+            List<string> ones = list.Where(x => x.Substring(i, 1) == "1").ToList();
 
-            int amountZero = list.Where(x => x.Substring(i, 1) == "0").Count();
-            int amountOne = list.Where(x => x.Substring(i, 1) == "1").Count();
-
-            string searchFor = "0";
             if (oxygen)
             {
-                if (amountOne >= amountZero)
-                    searchFor = "1";
+                if (ones.Count() >= zeroes.Count())
+                    return ones;
             }
             else
             {
-                if (amountOne < amountZero)
-                    searchFor = "1";
+                if (ones.Count() < zeroes.Count())
+                    return ones;
             }
 
-            cleanedList = list.Where(x => x.Substring(i, 1) == searchFor).ToList();
-
-            return cleanedList;
+            return zeroes;
         }
     }
 }
