@@ -57,8 +57,9 @@ namespace AdventOfCode2021
             Console.WriteLine("Epsilon Binary: " + epsilonRateBinary);
             var gammaRate = Convert.ToInt32(gammaRateBinary, 2);
             var epsilonRate = Convert.ToInt32(epsilonRateBinary, 2);
-
-            Console.WriteLine(String.Format("Answer: {0} x {1} = {2}", gammaRate, epsilonRate, gammaRate * epsilonRate));
+            var answer = gammaRate * epsilonRate;
+            Console.WriteLine(String.Format("Answer: {0} x {1} = {2}", gammaRate, epsilonRate, answer));
+            Assert(answer, 4138664);
             Console.WriteLine();
         }
 
@@ -92,8 +93,9 @@ namespace AdventOfCode2021
             Console.WriteLine("co2 scrubber rating: " + co2ScrubberBinary);
             var oxygenRating = Convert.ToInt32(oxygenRatingBinary, 2);
             var co2Scrubber = Convert.ToInt32(co2ScrubberBinary, 2);
-
-            Console.WriteLine(String.Format("Answer: {0} x {1} = {2}", oxygenRating, co2Scrubber, oxygenRating * co2Scrubber));
+            var answer = oxygenRating * co2Scrubber;
+            Console.WriteLine(String.Format("Answer: {0} x {1} = {2}", oxygenRating, co2Scrubber, answer));
+            Assert(answer, 4273224);
         }
 
         private List<string> CleanListAtPos(List<string> list, int i, bool oxygen)
@@ -141,15 +143,6 @@ namespace AdventOfCode2021
 
 
             return cleanedList;
-        }
-
-        private void RemoveFromInput(int pos, string bitToRemove)
-        {
-            foreach (String item in InputAsString)
-            {
-                if (item.Substring(pos, 1) == bitToRemove)
-                    InputAsString.Remove(item);
-            }
         }
     }
 }

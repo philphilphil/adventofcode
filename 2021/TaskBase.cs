@@ -8,13 +8,15 @@ namespace AdventOfCode2021
 {
     class TaskBase
     {
-        public List<string> InputAsString { get; set; } = new List<string>();
-        public List<long> InputAsLong { get; set; } = new List<long>();
-        public List<int> InputAsInt { get; set; } = new List<int>();
+        protected List<string> InputAsString { get; set; } = new List<string>();
+        protected List<long> InputAsLong { get; set; } = new List<long>();
+        protected List<int> InputAsInt { get; set; } = new List<int>();
 
-        public void ReadInput(int day)
+        protected void ReadInput(int day)
         {
-            var path = "../../../" + day.ToString() + "/input";
+            //var path = "../../../" + day.ToString() + "/input";
+            var path = day.ToString() + "/input";
+
             if (!File.Exists(path))
             {
                 throw new FileNotFoundException();
@@ -22,7 +24,7 @@ namespace AdventOfCode2021
             InputAsString = File.ReadAllLines(path).ToList();
         }
 
-        public void InputToInt()
+        protected void InputToInt()
         {
             InputAsInt = new List<int>();
 
@@ -33,7 +35,7 @@ namespace AdventOfCode2021
         }
 
 
-        public void InputToLong()
+        protected void InputToLong()
         {
             InputAsLong = new List<long>();
 
@@ -43,14 +45,24 @@ namespace AdventOfCode2021
             }
         }
 
-        public void GetResultPart1()
+        protected void GetResultPart1()
         {
 
         }
 
-        public void GetResultPart2()
+        protected void GetResultPart2()
         {
 
+        }
+
+        protected void Assert(int result, int expected)
+        {
+            if (result != expected)
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEST ERROR: Expected {0} but got {1}", expected, result);
+                Console.ResetColor();
+            }
         }
     }
 }
