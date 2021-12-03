@@ -105,31 +105,19 @@ namespace AdventOfCode2021
                 }
             }
 
-
+            string searchFor = "0";
             if (oxygen)
             {
                 if (amountOne >= amountZero)
-                {
-                    cleanedList = list.Where(x => x.Substring(i, 1) == "1").ToList();
-                }
-                else
-                {
-                    cleanedList = list.Where(x => x.Substring(i, 1) == "0").ToList();
-                }
+                    searchFor = "1";
             }
             else
             {
-
-                if (amountZero <= amountOne)
-                {
-                    cleanedList = list.Where(x => x.Substring(i, 1) == "0").ToList();
-                }
-                else
-                {
-                    cleanedList = list.Where(x => x.Substring(i, 1) == "1").ToList();
-                }
+                if (amountOne < amountZero)
+                    searchFor = "1";
             }
 
+            cleanedList = list.Where(x => x.Substring(i, 1) == searchFor).ToList();
 
             return cleanedList;
         }
