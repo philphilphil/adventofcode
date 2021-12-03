@@ -44,15 +44,9 @@ namespace AdventOfCode2021
                 }
             }
 
-            Console.WriteLine("Part 1:");
-            Console.WriteLine("Gamma Binary: " + gammaRateBinary);
-            Console.WriteLine("Epsilon Binary: " + epsilonRateBinary);
-            var gammaRate = Convert.ToInt32(gammaRateBinary, 2);
-            var epsilonRate = Convert.ToInt32(epsilonRateBinary, 2);
-            var answer = gammaRate * epsilonRate;
-            Console.WriteLine(String.Format("Answer: {0} x {1} = {2}", gammaRate, epsilonRate, answer));
+            var answer = Convert.ToInt32(gammaRateBinary, 2) * Convert.ToInt32(epsilonRateBinary, 2);
+            Console.WriteLine("Part 1 answer: {0}", answer);
             Assert(answer, 4138664);
-            Console.WriteLine();
         }
 
         public new void GetResultPart2()
@@ -72,13 +66,8 @@ namespace AdventOfCode2021
             string oxygenRatingBinary = InputAsString[0];
             string co2ScrubberBinary = InputAsStringCopy[0];
 
-            Console.WriteLine("Part 2:");
-            Console.WriteLine("oxygen generator rating: " + oxygenRatingBinary);
-            Console.WriteLine("co2 scrubber rating: " + co2ScrubberBinary);
-            var oxygenRating = Convert.ToInt32(oxygenRatingBinary, 2);
-            var co2Scrubber = Convert.ToInt32(co2ScrubberBinary, 2);
-            var answer = oxygenRating * co2Scrubber;
-            Console.WriteLine(String.Format("Answer: {0} x {1} = {2}", oxygenRating, co2Scrubber, answer));
+            var answer = Convert.ToInt32(oxygenRatingBinary, 2) * Convert.ToInt32(co2ScrubberBinary, 2);
+            Console.WriteLine("Part 2 answer: {0}", answer);
             Assert(answer, 4273224);
         }
 
