@@ -21,25 +21,13 @@ namespace AdventOfCode2021
 
         public new void GetResultPart1()
         {
-            //101001011000
             string gammaRateBinary = "";
             string epsilonRateBinary = "";
+
             for (int i = 0; i < InputAsString[0].Length; i++)
             {
-                int amountZero = 0, amountOne = 0;
-                foreach (string reading in InputAsString)
-                {
-                    string c = reading.Substring(i, 1);
-
-                    if (c == "0")
-                    {
-                        amountZero++;
-                    }
-                    else
-                    {
-                        amountOne++;
-                    }
-                }
+                int amountZero = InputAsString.Where(x => x.Substring(i, 1) == "0").Count();
+                int amountOne = InputAsString.Where(x => x.Substring(i, 1) == "1").Count();
 
                 if (amountOne > amountZero)
                 {
@@ -52,6 +40,7 @@ namespace AdventOfCode2021
                     epsilonRateBinary += "1";
                 }
             }
+
             Console.WriteLine("Part 1:");
             Console.WriteLine("Gamma Binary: " + gammaRateBinary);
             Console.WriteLine("Epsilon Binary: " + epsilonRateBinary);
