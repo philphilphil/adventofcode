@@ -21,13 +21,44 @@ namespace AdventOfCode2021
 
         public new void GetResultPart1()
         {
-
-            foreach (string command in InputAsString)
+            //101001011000
+            string gammaRateBinary = "";
+            string epsilonRateBinary = "";
+            for (int i = 0; i < InputAsString[0].Length; i++)
             {
+                int amountZero = 0, amountOne = 0;
+                foreach (string reading in InputAsString)
+                {
+                    string c = reading.Substring(i, 1);
 
+                    if (c == "0")
+                    {
+                        amountZero++;
+                    }
+                    else
+                    {
+                        amountOne++;
+                    }
+                }
+
+                if (amountOne > amountZero)
+                {
+                    gammaRateBinary += "1";
+                    epsilonRateBinary += "0";
+                }
+                else
+                {
+                    gammaRateBinary += "0";
+                    epsilonRateBinary += "1";
+                }
             }
 
-            Console.WriteLine(String.Format("Answer: {0}", ""));
+            Console.WriteLine("Gamma Binary: " + gammaRateBinary);
+            Console.WriteLine("Epsilon Binary: " + epsilonRateBinary);
+            var gammaRate = Convert.ToInt32(gammaRateBinary, 2);
+            var epsilonRate = Convert.ToInt32(epsilonRateBinary, 2);
+
+            Console.WriteLine(String.Format("Answer: {0} x {1} = {2}", gammaRate, epsilonRate, gammaRate * epsilonRate));
         }
 
         public new void GetResultPart2()
