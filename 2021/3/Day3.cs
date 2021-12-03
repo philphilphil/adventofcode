@@ -22,7 +22,7 @@ namespace AdventOfCode2021
             GetResultPart2();
         }
 
-        public new void GetResultPart1()
+        private new void GetResultPart1()
         {
             string gammaRateBinary = "";
             string epsilonRateBinary = "";
@@ -49,7 +49,7 @@ namespace AdventOfCode2021
             Assert(answer, 4138664);
         }
 
-        public new void GetResultPart2()
+        private new void GetResultPart2()
         {
             List<string> InputAsStringCopy = InputAsString;
 

@@ -64,5 +64,15 @@ namespace AdventOfCode2021
                 Console.ResetColor();
             }
         }
+
+                protected void Assert(string result, string expected)
+        {
+            if (result != expected)
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEST ERROR: Expected {0} but got {1}", expected, result);
+                Console.ResetColor();
+            }
+        }
     }
 }
