@@ -53,16 +53,15 @@ namespace AdventOfCode2021
 
         private new void GetResultPart1()
         {
-
-            BingoGame winner;
             int answer = 0;
             foreach (int drawnNumber in DrawnNumbers)
             {
-                winner = MarkNumberAndCeckForWinner(drawnNumber);
+                MarkNumberAndCeckForWinners(drawnNumber);
 
-                if (winner != null)
+                var wonGame = BingoGames.Where(x => x.Won).FirstOrDefault();
+                if (wonGame != null)
                 {
-                    answer = drawnNumber * GetSumOfUnmarkedNumbers(winner);
+                    answer = drawnNumber * GetSumOfUnmarkedNumbers(wonGame);
                     break;
                 }
             }
@@ -78,17 +77,17 @@ namespace AdventOfCode2021
             for (int i = 0; i < winner.FoundNumbers.Length; i++)
             {
                 if (!winner.FoundNumbers[i])
-                {
                     sum += winner.Numbers[i];
-                }
             }
 
             return sum;
         }
 
-        private BingoGame MarkNumberAndCeckForWinner(int drawnNumber)
+        private void MarkNumberAndCeckForWinners(int drawnNumber)
         {
-            foreach (BingoGame bg in BingoGames)
+            var games = BingoGames.Where(x => !x.Won);
+
+            foreach (BingoGame bg in games)
             {
                 int numberIndex = bg.Numbers.IndexOf(drawnNumber);
                 if (numberIndex >= 0)
@@ -97,10 +96,11 @@ namespace AdventOfCode2021
                 }
 
                 if (CheckForWin(bg))
-                    return bg;
+                {
+                    bg.Place = BingoGames.Where(x => x.Won).Count() + 1;
+                    bg.Won = true;
+                }
             }
-
-            return null;
         }
 
         private bool CheckForWin(BingoGame bg)
@@ -123,9 +123,25 @@ namespace AdventOfCode2021
 
         private new void GetResultPart2()
         {
-            var answer = "answer";
-            Console.WriteLine("Part 2 answer: {0}", "answer");
-            Assert(answer, "4138664");
+            int lastWinnerNumber = 0;
+            int answer = 0;
+            foreach (int drawnNumber in DrawnNumbers)
+            {
+                MarkNumberAndCeckForWinners(drawnNumber);
+
+                if (BingoGames.Where(x => !x.Won).Count() == 0)
+                {
+                    lastWinnerNumber = drawnNumber;
+                    break;
+                }
+            }
+
+            BingoGame lastWinnerGame = BingoGames.OrderByDescending(x => x.Place).FirstOrDefault();
+            answer = lastWinnerNumber * GetSumOfUnmarkedNumbers(lastWinnerGame);
+
+
+            Console.WriteLine("Part 2 answer: {0}", answer);
+            Assert(answer, 5586);
         }
     }
 
@@ -136,6 +152,10 @@ namespace AdventOfCode2021
         //public int FoundNumbers { get; set; } try with bb later
 
         public BitArray FoundNumbers { get; set; } = new BitArray(25);
+
+        public bool Won { get; set; } = false;
+
+        public int Place { get; set; } = 0;
 
     }
 }
