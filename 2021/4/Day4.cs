@@ -98,7 +98,6 @@ namespace AdventOfCode2021
                 if (CheckForWin(bg))
                 {
                     bg.Place = BingoGames.Where(x => x.Won).Count() + 1;
-                    bg.Won = true;
                 }
             }
         }
@@ -150,11 +149,8 @@ namespace AdventOfCode2021
     {
         public List<int> Numbers { get; set; } = new List<int>();
 
-        //public int FoundNumbers { get; set; } try with bb later
-
         public BitArray FoundNumbers { get; set; } = new BitArray(25);
-
-        public bool Won { get; set; } = false;
+        public bool Won { get { return this.Place != 0; } }
 
         public int Place { get; set; } = 0;
 
