@@ -136,9 +136,10 @@ namespace AdventOfCode2021
                 }
             }
 
-            BingoGame lastWinnerGame = BingoGames.OrderByDescending(x => x.Place).FirstOrDefault();
-            answer = lastWinnerNumber * GetSumOfUnmarkedNumbers(lastWinnerGame);
+            BingoGame? lastWinnerGame = BingoGames.OrderByDescending(x => x.Place).FirstOrDefault();
 
+            if (lastWinnerGame != null)
+                answer = lastWinnerNumber * GetSumOfUnmarkedNumbers(lastWinnerGame);
 
             Console.WriteLine("Part 2 answer: {0}", answer);
             Assert(answer, 5586);
