@@ -91,14 +91,10 @@ namespace AdventOfCode2021
             {
                 int numberIndex = bg.Numbers.IndexOf(drawnNumber);
                 if (numberIndex >= 0)
-                {
                     bg.FoundNumbers[numberIndex] = true;
-                }
 
                 if (CheckForWin(bg))
-                {
                     bg.Place = BingoGames.Where(x => x.Won).Count() + 1;
-                }
             }
         }
 
@@ -108,12 +104,20 @@ namespace AdventOfCode2021
             for (int i = 0; i < 5; i++)
             {
                 // rows
-                if (bg.FoundNumbers[i + horAdjust] && bg.FoundNumbers[i + 1 + horAdjust] && bg.FoundNumbers[i + 2 + horAdjust] && bg.FoundNumbers[i + 3 + horAdjust] && bg.FoundNumbers[i + 4 + horAdjust])
+                if (bg.FoundNumbers[i + horAdjust] &&
+                bg.FoundNumbers[i + 1 + horAdjust] &&
+                bg.FoundNumbers[i + 2 + horAdjust] &&
+                bg.FoundNumbers[i + 3 + horAdjust] &&
+                bg.FoundNumbers[i + 4 + horAdjust])
                     return true;
                 horAdjust += 4;
 
                 // columns
-                if (bg.FoundNumbers[i] && bg.FoundNumbers[i + 5] && bg.FoundNumbers[i + 10] && bg.FoundNumbers[i + 15] && bg.FoundNumbers[i + 20])
+                if (bg.FoundNumbers[i] &&
+                bg.FoundNumbers[i + 5] &&
+                bg.FoundNumbers[i + 10] &&
+                bg.FoundNumbers[i + 15] &&
+                bg.FoundNumbers[i + 20])
                     return true;
             }
 
@@ -150,6 +154,7 @@ namespace AdventOfCode2021
         public List<int> Numbers { get; set; } = new List<int>();
 
         public BitArray FoundNumbers { get; set; } = new BitArray(25);
+
         public bool Won { get { return this.Place != 0; } }
 
         public int Place { get; set; } = 0;
