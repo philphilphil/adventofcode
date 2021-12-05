@@ -12,10 +12,13 @@ namespace AdventOfCode2021
         protected List<long> InputAsLong { get; set; } = new List<long>();
         protected List<int> InputAsInt { get; set; } = new List<int>();
 
-        protected void ReadInput(int day)
+        protected void ReadInput(int day, bool demo = false)
         {
             //var path = "../../../" + day.ToString() + "/input";
             var path = day.ToString() + "/input";
+
+            if (demo)
+                path += "Demo";
 
             if (!File.Exists(path))
             {
@@ -65,7 +68,7 @@ namespace AdventOfCode2021
             }
         }
 
-                protected void Assert(string result, string expected)
+        protected void Assert(string result, string expected)
         {
             if (result != expected)
             {

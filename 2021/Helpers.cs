@@ -9,7 +9,9 @@ public static class Helpers
         {
             for (int j = 0; j < colLength; j++)
             {
-                Console.Write(string.Format("{0} ", array[i, j]));
+                var output = array[i, j].ToString();
+                if (output == "0") output = ".";
+                Console.Write(string.Format("{0} ", output));
             }
             Console.WriteLine();
         }
