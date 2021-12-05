@@ -9,9 +9,12 @@ namespace AdventOfCode2021
     class DayX : TaskBase
     {
 
-        public DayX()
+        private bool Demo { get; set; }
+
+        public DayX(bool demo = false)
         {
-            base.ReadInput(0);
+            this.Demo = demo;
+            base.ReadInput(0, Demo);
         }
 
         internal void GetResults()
