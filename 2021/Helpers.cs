@@ -11,7 +11,7 @@ public static class Helpers
             {
                 var output = array[i, j].ToString();
                 if (output == "0") output = ".";
-                Console.Write(string.Format("{0} ", output));
+                Console.Write("{0} ", output);
             }
             Console.WriteLine();
         }
