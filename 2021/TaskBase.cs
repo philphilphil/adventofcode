@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Serilog;
 
 namespace AdventOfCode2021
 {
@@ -62,9 +63,7 @@ namespace AdventOfCode2021
         {
             if (result != expected)
             {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("TEST ERROR: Expected {0} but got {1}", expected, result);
-                Console.ResetColor();
+                Log.Error("TEST ERROR: Expected {0} but got {1}", expected, result);
             }
         }
 
@@ -72,9 +71,7 @@ namespace AdventOfCode2021
         {
             if (result != expected)
             {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("TEST ERROR: Expected {0} but got {1}", expected, result);
-                Console.ResetColor();
+                Log.Error("TEST ERROR: Expected {0} but got {1}", expected, result);
             }
         }
     }

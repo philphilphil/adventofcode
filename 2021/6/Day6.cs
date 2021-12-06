@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Serilog;
 
 namespace AdventOfCode2021
 {
@@ -34,7 +35,8 @@ namespace AdventOfCode2021
             {
                 for (int x = 0; x < Fishes.Count(); x++)
                 {
-                    if (Fishes[x] == 0) {
+                    if (Fishes[x] == 0)
+                    {
                         Fishes[x] = 6;
                         Fishes.Add(9); // 9 because it will get -- at the end of this day cycle
                         continue;
@@ -50,23 +52,26 @@ namespace AdventOfCode2021
 
         private new void GetResultPart2()
         {
-        int daysToSimulate = 256;
+            int daysToSimulate = 2;
+            int[] fishesArray = InputAsString[0].Split(",").Select(int.Parse).ToArray();
 
             for (int i = 0; i < daysToSimulate; i++)
             {
-                for (int x = 0; x < Fishes.Count(); x++)
+                for (int x = 0; x < fishesArray.Length; x++)
                 {
-                    if (Fishes[x] == 0) {
-                        Fishes[x] = 6;
-                        Fishes.Add(9); // 9 because it will get -- at the end of this day cycle
+                    if (fishesArray[x] == 0)
+                    {
+                        fishesArray[x] = 6;
+                        Array.Resize(ref fishesArray, fishesArray.Length + 1);
+                        fishesArray[fishesArray.Length - 1] = 9;
                         continue;
                     }
-                    Fishes[x]--;
+                    fishesArray[x]--;
                 }
             }
 
-            var answer = Fishes.Count();
-            Console.WriteLine("Part 2 answer: {0}", answer);
+            var answer = fishesArray.Length;
+            Log.Information("Part 2 answer: {0}", answer);
             //Assert(answer, 26984457539);
         }
     }

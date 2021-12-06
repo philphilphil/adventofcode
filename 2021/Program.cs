@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 
 namespace AdventOfCode2021
 {
@@ -6,13 +7,19 @@ namespace AdventOfCode2021
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .WriteTo.Console()
+        .CreateLogger();
+
             var watch = System.Diagnostics.Stopwatch.StartNew();
+            Log.Information("Running..");
 
             var task = new Day6(true);
             task.GetResults();
 
             watch.Stop();
-            Console.WriteLine("It took {0}ms", watch.ElapsedMilliseconds);
+            Log.Information("It took {0} ms", watch.ElapsedMilliseconds);
         }
     }
 }
