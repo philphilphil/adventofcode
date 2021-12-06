@@ -65,16 +65,16 @@ namespace AdventOfCode2021
 
             for (int x = 0; x < daysToSimulate; x++)
             {
-                var fish0a = fishState[0];
+                var fishState0 = fishState[0];
                 fishState[0] = fishState[1];
                 fishState[1] = fishState[2];
                 fishState[2] = fishState[3];
                 fishState[3] = fishState[4];
                 fishState[4] = fishState[5];
                 fishState[5] = fishState[6];
-                fishState[6] = fishState[7] + fish0a;
+                fishState[6] = fishState[7] + fishState0;
                 fishState[7] = fishState[8];
-                fishState[8] = fish0a;
+                fishState[8] = fishState0;
             }
 
             var answer = fishState.Sum();
