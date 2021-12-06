@@ -8,18 +8,19 @@ namespace AdventOfCode2021
         static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-        .MinimumLevel.Debug()
-        .WriteTo.Console()
-        .CreateLogger();
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .CreateLogger();
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
             Log.Information("Running..");
 
-            var task = new Day6(true);
+            var task = new Day6();
             task.GetResults();
 
             watch.Stop();
-            Log.Information("It took {0} ms", watch.ElapsedMilliseconds);
+            TimeSpan ts = watch.Elapsed;
+            Log.Information("It took {0}h {1}m {2}s {3}ms", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
         }
     }
 }

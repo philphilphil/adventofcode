@@ -23,7 +23,7 @@ namespace AdventOfCode2021
 
         internal void GetResults()
         {
-            //GetResultPart1();
+            GetResultPart1();
             GetResultPart2();
         }
 
@@ -46,33 +46,48 @@ namespace AdventOfCode2021
             }
 
             var answer = Fishes.Count();
-            Console.WriteLine("Part 1 answer: {0}", answer);
-            Assert(answer, 393019);
+            Log.Information("Part 1 answer: {0}", answer);
+            var expectedResult = Demo ? 5934 : 393019;
+            Assert(answer, expectedResult);
         }
 
         private new void GetResultPart2()
         {
-            int daysToSimulate = 2;
-            int[] fishesArray = InputAsString[0].Split(",").Select(int.Parse).ToArray();
+            int daysToSimulate = 256;
 
-            for (int i = 0; i < daysToSimulate; i++)
+            this.Fishes = InputAsString[0].Split(",").Select(int.Parse).ToList();
+            long fish0 = Fishes.Where(x => x == 0).Count();
+            long fish1 = Fishes.Where(x => x == 1).Count();
+            long fish2 = Fishes.Where(x => x == 2).Count();
+            long fish3 = Fishes.Where(x => x == 3).Count();
+            long fish4 = Fishes.Where(x => x == 4).Count();
+            long fish5 = Fishes.Where(x => x == 5).Count();
+            long fish6 = Fishes.Where(x => x == 6).Count();
+            long fish7 = Fishes.Where(x => x == 7).Count();
+            long fish8 = Fishes.Where(x => x == 8).Count();
+
+            for (int x = 0; x < daysToSimulate; x++)
             {
-                for (int x = 0; x < fishesArray.Length; x++)
-                {
-                    if (fishesArray[x] == 0)
-                    {
-                        fishesArray[x] = 6;
-                        Array.Resize(ref fishesArray, fishesArray.Length + 1);
-                        fishesArray[fishesArray.Length - 1] = 9;
-                        continue;
-                    }
-                    fishesArray[x]--;
-                }
+                var fish0a = fish0;
+                fish0 = fish1;
+                fish1 = fish2;
+                fish2 = fish3;
+                fish3 = fish4;
+                fish4 = fish5;
+                fish5 = fish6;
+                fish6 = fish7;
+                fish7 = fish8;
+                fish8 = 0;
+
+                fish6 += fish0a;
+                fish8 += fish0a;
+                //fish0 = 0;
             }
 
-            var answer = fishesArray.Length;
+            var answer = fish0 + fish1 + fish2 + fish3 + fish4 + fish5 + fish6 + fish7 + fish8;
             Log.Information("Part 2 answer: {0}", answer);
-            //Assert(answer, 26984457539);
+            var expectedResult = Demo ? 26984457539 : 1757714216975;
+            Assert(answer, expectedResult);
         }
     }
 }
