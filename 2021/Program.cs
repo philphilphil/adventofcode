@@ -6,8 +6,13 @@ namespace AdventOfCode2021
     {
         static void Main(string[] args)
         {
-            var task = new Day5();
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            var task = new Day6(true);
             task.GetResults();
+
+            watch.Stop();
+            Console.WriteLine("It took {0}ms", watch.ElapsedMilliseconds);
         }
     }
 }
