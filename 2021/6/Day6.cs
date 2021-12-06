@@ -24,6 +24,8 @@ namespace AdventOfCode2021
         internal void GetResults()
         {
             GetResultPart1();
+
+            this.Fishes = InputAsString[0].Split(",").Select(int.Parse).ToList(); //reload input
             GetResultPart2();
         }
 
@@ -54,37 +56,28 @@ namespace AdventOfCode2021
         private new void GetResultPart2()
         {
             int daysToSimulate = 256;
+            List<long> fishState = new List<long> { 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-            this.Fishes = InputAsString[0].Split(",").Select(int.Parse).ToList();
-            long fish0 = Fishes.Where(x => x == 0).Count();
-            long fish1 = Fishes.Where(x => x == 1).Count();
-            long fish2 = Fishes.Where(x => x == 2).Count();
-            long fish3 = Fishes.Where(x => x == 3).Count();
-            long fish4 = Fishes.Where(x => x == 4).Count();
-            long fish5 = Fishes.Where(x => x == 5).Count();
-            long fish6 = Fishes.Where(x => x == 6).Count();
-            long fish7 = Fishes.Where(x => x == 7).Count();
-            long fish8 = Fishes.Where(x => x == 8).Count();
+            foreach (var fish in Fishes)
+            {
+                fishState[fish]++;
+            }
 
             for (int x = 0; x < daysToSimulate; x++)
             {
-                var fish0a = fish0;
-                fish0 = fish1;
-                fish1 = fish2;
-                fish2 = fish3;
-                fish3 = fish4;
-                fish4 = fish5;
-                fish5 = fish6;
-                fish6 = fish7;
-                fish7 = fish8;
-                fish8 = 0;
-
-                fish6 += fish0a;
-                fish8 += fish0a;
-                //fish0 = 0;
+                var fish0a = fishState[0];
+                fishState[0] = fishState[1];
+                fishState[1] = fishState[2];
+                fishState[2] = fishState[3];
+                fishState[3] = fishState[4];
+                fishState[4] = fishState[5];
+                fishState[5] = fishState[6];
+                fishState[6] = fishState[7] + fish0a;
+                fishState[7] = fishState[8];
+                fishState[8] = fish0a;
             }
 
-            var answer = fish0 + fish1 + fish2 + fish3 + fish4 + fish5 + fish6 + fish7 + fish8;
+            var answer = fishState.Sum();
             Log.Information("Part 2 answer: {0}", answer);
             var expectedResult = Demo ? 26984457539 : 1757714216975;
             Assert(answer, expectedResult);
