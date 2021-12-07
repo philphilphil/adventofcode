@@ -9,8 +9,6 @@ namespace AdventOfCode2021
     class DayX : TaskBase
     {
 
-        private bool Demo { get; set; }
-
         public DayX(bool demo = false)
         {
             this.Demo = demo;
@@ -31,14 +29,16 @@ namespace AdventOfCode2021
 
             var answer = "answer";
             Console.WriteLine("Part 1 answer: {0}", "answer");
-            Assert(answer, "4138664");
+            var expectedResult = Demo ? "a" : "b";
+            Assert(answer, expectedResult);
         }
 
         private new void GetResultPart2()
         {
             var answer = "answer";
             Console.WriteLine("Part 2 answer: {0}", "answer");
-            Assert(answer, "4138664");
+            var expectedResult = Demo ? "a" : "b";
+            Assert(answer, expectedResult);
         }
     }
 }
