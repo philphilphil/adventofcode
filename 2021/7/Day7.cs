@@ -66,14 +66,8 @@ namespace AdventOfCode2021
                 int posFuelUsage = 0;
                 foreach (int crab in CrabPositions)
                 {
-                    if (crab > hPos)
-                    {
-                        posFuelUsage += CalcUp(crab - hPos);
-                    }
-                    else if (crab < hPos)
-                    {
-                        posFuelUsage += CalcUp(hPos - crab);
-                    }
+                    var movesNeeded = Math.Abs(crab - hPos);
+                    posFuelUsage += (movesNeeded * (movesNeeded + 1)) / 2;
 
                     if (posFuelUsage > lowestFuel) break;
                 }
@@ -86,18 +80,6 @@ namespace AdventOfCode2021
             Log.Information("Part 2 answer: {0}", answer);
             var expectedResult = Demo ? 168 : 96361606;
             Assert(answer, expectedResult);
-        }
-
-        private int CalcUp(int movesNeeded)
-        {
-            int r = 0;
-
-            for (int i = 0; i <= movesNeeded; i++)
-            {
-                r += i;
-            }
-
-            return r;
         }
     }
 }
