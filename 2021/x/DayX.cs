@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Serilog;
 
 namespace AdventOfCode2021
 {
@@ -28,7 +29,7 @@ namespace AdventOfCode2021
             }
 
             var answer = "answer";
-            Console.WriteLine("Part 1 answer: {0}", "answer");
+            Log.Information("Part 1 answer: {0}", "answer");
             var expectedResult = Demo ? "a" : "b";
             Assert(answer, expectedResult);
         }
@@ -36,7 +37,7 @@ namespace AdventOfCode2021
         private new void GetResultPart2()
         {
             var answer = "answer";
-            Console.WriteLine("Part 2 answer: {0}", "answer");
+            Log.Information("Part 2 answer: {0}", "answer");
             var expectedResult = Demo ? "a" : "b";
             Assert(answer, expectedResult);
         }

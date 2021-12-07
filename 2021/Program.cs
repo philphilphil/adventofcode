@@ -15,7 +15,15 @@ namespace AdventOfCode2021
             var watch = System.Diagnostics.Stopwatch.StartNew();
             Log.Information("Running..");
 
-            var task = new Day7();
+            bool runWithDemoInput = false;
+            if (args.Length == 1 && args[0] == "demo")
+                runWithDemoInput = true;
+
+// #if (DEBUG)
+//             runWithDemoInput = true;
+// #endif
+
+            var task = new Day7(runWithDemoInput);
             task.GetResults();
 
             watch.Stop();
