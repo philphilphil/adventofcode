@@ -15,7 +15,7 @@ namespace AdventOfCode2021
             var watch = System.Diagnostics.Stopwatch.StartNew();
             Log.Information("Running..");
 
-            var task = new Day6();
+            var task = new Day7();
             task.GetResults();
 
             watch.Stop();

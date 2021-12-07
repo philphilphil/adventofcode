@@ -11,7 +11,6 @@ namespace AdventOfCode2021
 
 
         public int[,] Map { get; set; }
-        private bool Demo { get; set; }
         public Day5(bool demo = false)
         {
             this.Demo = demo;

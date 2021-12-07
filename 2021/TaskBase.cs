@@ -9,6 +9,7 @@ namespace AdventOfCode2021
 {
     class TaskBase
     {
+        public bool Demo { get; set; }
         protected List<string> InputAsString { get; set; } = new List<string>();
         protected List<long> InputAsLong { get; set; } = new List<long>();
         protected List<int> InputAsInt { get; set; } = new List<int>();

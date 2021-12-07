@@ -10,8 +10,6 @@ namespace AdventOfCode2021
     class Day6 : TaskBase
     {
 
-        private bool Demo { get; set; }
-
         private List<int> Fishes { get; set; }
 
         public Day6(bool demo = false)
