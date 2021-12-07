@@ -58,22 +58,23 @@ namespace AdventOfCode2021
 
         private new void GetResultPart2()
         {
+            var crabPositions = InputAsString[0].Split(",").Select(int.Parse).ToList();
+
             int lowestFuel = int.MaxValue;
-            int maxFishDistance = CrabPositions.Max();
+            int maxFishDistance = crabPositions.Max();
 
             for (int hPos = 0; hPos < maxFishDistance; hPos++)
             {
                 int posFuelUsage = 0;
-                foreach (int crab in CrabPositions)
+                crabPositions.ForEach(crab =>
                 {
                     var movesNeeded = Math.Abs(crab - hPos);
                     posFuelUsage += (movesNeeded * (movesNeeded + 1)) / 2;
 
-                    if (posFuelUsage > lowestFuel) break;
-                }
+                    if (posFuelUsage > lowestFuel) return;
+                });
 
-                if (posFuelUsage < lowestFuel)
-                    lowestFuel = posFuelUsage;
+                if (posFuelUsage < lowestFuel) lowestFuel = posFuelUsage;
             }
 
             var answer = lowestFuel;
