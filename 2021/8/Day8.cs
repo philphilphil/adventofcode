@@ -7,10 +7,10 @@ using Serilog;
 
 namespace AdventOfCode2021
 {
-    class DayX : TaskBase
+    class Day8 : TaskBase
     {
 
-        public DayX(bool demo = false)
+        public Day8(bool demo = false)
         {
             this.Demo = demo;
             base.ReadInput(0, Demo);

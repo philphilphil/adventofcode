@@ -50,10 +50,9 @@ namespace AdventOfCode2021
                     lowestFuel = posFuelUsage;
             }
 
-            var answer = lowestFuel;
-            Log.Information("Part 1 answer: {0}", answer);
+            Log.Information("Part 1 answer: {0}", lowestFuel);
             var expectedResult = Demo ? 37 : 345197;
-            Assert(answer, expectedResult);
+            Assert(lowestFuel, expectedResult);
         }
 
         private new void GetResultPart2()
@@ -77,10 +76,9 @@ namespace AdventOfCode2021
                 if (posFuelUsage < lowestFuel) lowestFuel = posFuelUsage;
             }
 
-            var answer = lowestFuel;
-            Log.Information("Part 2 answer: {0}", answer);
+            Log.Information("Part 2 answer: {0}", lowestFuel);
             var expectedResult = Demo ? 168 : 96361606;
-            Assert(answer, expectedResult);
+            Assert(lowestFuel, expectedResult);
         }
     }
 }

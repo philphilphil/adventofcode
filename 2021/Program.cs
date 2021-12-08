@@ -23,7 +23,7 @@ namespace AdventOfCode2021
 //             runWithDemoInput = true;
 // #endif
 
-            var task = new Day7(runWithDemoInput);
+            var task = new Day8(runWithDemoInput);
             task.GetResults();
 
             watch.Stop();
