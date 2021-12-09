@@ -10,13 +10,16 @@ namespace AdventOfCode2021
     class Day9 : TaskBase
     {
         public int[,] Map { get; set; }
+
+        bool[,] AlreadyVisited { get; set; }
+
         public Day9(bool demo = false)
         {
             this.Demo = demo;
             base.ReadInput(9, Demo);
 
             Map = BuildMap();
-            Helpers.Print2DArray(Map);
+            //Helpers.Print2DArray(Map);
         }
 
         private int[,] BuildMap()
@@ -48,14 +51,10 @@ namespace AdventOfCode2021
                 for (int a = 0; a < Map.GetLength(1); a++)
                 {
                     int middle = getNumberAtPos(i, a);
-                    //int topLeft = getNumberAtPos(i - 1, a - 1);
                     int top = getNumberAtPos(i - 1, a);
-                    //int topRight = getNumberAtPos(i - 1, a + 1);
                     int left = getNumberAtPos(i, a - 1);
                     int right = getNumberAtPos(i, a + 1);
-                    //int bottomLeft = getNumberAtPos(i + 1, a - 1);
                     int bottom = getNumberAtPos(i + 1, a);
-                    //int bottomRight = getNumberAtPos(i + 1, a + 1);
 
                     if (middle < left && middle < top && middle < right && middle < bottom)
                         lowPositionSum += middle + 1;
@@ -75,11 +74,48 @@ namespace AdventOfCode2021
             return Map[row, col];
         }
 
+        public int RecrusiveCave(int y, int x, int currSize)
+        {
+            if (AlreadyVisited[y, x]) return 0;
+
+            int current = getNumberAtPos(y, x);
+            int top = getNumberAtPos(y - 1, x);
+            int left = getNumberAtPos(y, x - 1);
+            int right = getNumberAtPos(y, x + 1);
+            int bottom = getNumberAtPos(y + 1, x);
+
+            if (current != 9) currSize++;
+            AlreadyVisited[y, x] = true;
+
+            currSize += top != 9 ? RecrusiveCave(y - 1, x, 0) : 0;
+            currSize += left != 9 ? RecrusiveCave(y, x - 1, 0) : 0;
+            currSize += right != 9 ? RecrusiveCave(y, x + 1, 0) : 0;
+            currSize += bottom != 9 ? RecrusiveCave(y + 1, x, 0) : 0;
+
+            return currSize;
+        }
+
         private new void GetResultPart2()
         {
-            var answer = 0;
+            List<int> Caves = new List<int>();
+            AlreadyVisited = new bool[Map.GetLength(0), Map.GetLength(1)];
+
+            for (int y = 0; y < Map.GetLength(0); y++)
+            {
+                for (int x = 0; x < Map.GetLength(1); x++)
+                {
+                    if (AlreadyVisited[y, x]) continue;
+                    
+                    var result = RecrusiveCave(y, x, 0);
+                    if (result != 0)
+                        Caves.Add(result);
+                }
+            }
+
+            var biggestCaves = Caves.OrderByDescending(x => x).ToList();
+            var answer = biggestCaves[0] * biggestCaves[1] * biggestCaves[2];
             Log.Information("Part 2 answer: {0}", answer);
-            var expectedResult = Demo ? 1134 : 0;
+            var expectedResult = Demo ? 1134 : 1397760;
             Assert(answer, expectedResult);
         }
     }
