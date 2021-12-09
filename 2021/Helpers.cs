@@ -10,7 +10,7 @@ public static class Helpers
             for (int j = 0; j < colLength; j++)
             {
                 var output = array[i, j].ToString();
-                if (output == "0") output = ".";
+                //if (output == "0") output = ".";
                 Console.Write("{0} ", output);
             }
             Console.WriteLine();
