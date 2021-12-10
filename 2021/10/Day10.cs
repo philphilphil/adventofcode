@@ -69,7 +69,7 @@ namespace AdventOfCode2021
 
             var answer = bracketPoints + sBracketPoints + bracePoints + relOp;
             Log.Information("Part 1 answer: {0}", answer);
-            var expectedResult = Demo ? 26397 : 0;
+            var expectedResult = Demo ? 26397 : 243939;
             Assert(answer, expectedResult);
         }
 

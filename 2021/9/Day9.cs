@@ -19,6 +19,8 @@ namespace AdventOfCode2021
             base.ReadInput(9, Demo);
 
             Map = BuildMap();
+            AlreadyVisited = new bool[Map.GetLength(0), Map.GetLength(1)];
+
             //Helpers.Print2DArray(Map);
         }
 
@@ -98,14 +100,13 @@ namespace AdventOfCode2021
         private new void GetResultPart2()
         {
             List<int> Caves = new List<int>();
-            AlreadyVisited = new bool[Map.GetLength(0), Map.GetLength(1)];
 
             for (int y = 0; y < Map.GetLength(0); y++)
             {
                 for (int x = 0; x < Map.GetLength(1); x++)
                 {
                     if (AlreadyVisited[y, x]) continue;
-                    
+
                     var result = RecrusiveCave(y, x, 0);
                     if (result != 0)
                         Caves.Add(result);
