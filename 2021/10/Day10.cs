@@ -9,6 +9,8 @@ namespace AdventOfCode2021
 {
     class Day10 : TaskBase
     {
+
+        List<string> IncompleteLines = new List<string>();
         public Day10(bool demo = false)
         {
             this.Demo = demo;
@@ -25,12 +27,8 @@ namespace AdventOfCode2021
         {
             List<char> openCharacters = new List<char> { '(', '[', '{', '<' };
             List<char> closeCharacters = new List<char> { ')', ']', '}', '>' };
-
-            // (char, char) bracket = ('(', ')');
-            // (char, char) sBracket = ('[', ']');
-            // (char, char) braces = ('{', '}');
-            // (char, char) relOp = ('<', '>');
-            List<char> falseClose = new List<char>();
+            List<char> corruptedLineEnds = new List<char>();
+            IncompleteLines.AddRange(InputAsString);
 
             foreach (string input in InputAsString)
             {
@@ -38,36 +36,31 @@ namespace AdventOfCode2021
 
                 for (int i = 0; i < operators.Count(); i++)
                 {
-                    if (i == operators.Count - 1)
-                    {
-                        break;
-                    }
-
                     var closeChar = closeCharacters.IndexOf(operators[i]);
-                    if (closeChar >= 0)
+                    if (closeChar != -1)
                     {
                         if (operators[i - 1] != openCharacters[closeChar])
                         {
-                            falseClose.Add(operators[i]);
+                            corruptedLineEnds.Add(operators[i]);
+                            IncompleteLines.Remove(input); //remove corrupted line for p2
                             break;
                         }
                         else
                         {
                             operators.RemoveAt(i - 1);
                             operators.RemoveAt(i - 1);
-                            i = 0;
+                            i = 0; //start from the beginning
                         }
                     }
-
                 }
             }
 
-            int bracketPoints = falseClose.Where(x => x == ')').Count() * 3;
-            int sBracketPoints = falseClose.Where(x => x == ']').Count() * 57;
-            int bracePoints = falseClose.Where(x => x == '}').Count() * 1197;
-            int relOp = falseClose.Where(x => x == '>').Count() * 25137;
+            int bracketPoints = corruptedLineEnds.Where(x => x == ')').Count() * 3;
+            int sBracketPoints = corruptedLineEnds.Where(x => x == ']').Count() * 57;
+            int bracePoints = corruptedLineEnds.Where(x => x == '}').Count() * 1197;
+            int relOpPoints = corruptedLineEnds.Where(x => x == '>').Count() * 25137;
 
-            var answer = bracketPoints + sBracketPoints + bracePoints + relOp;
+            var answer = bracketPoints + sBracketPoints + bracePoints + relOpPoints;
             Log.Information("Part 1 answer: {0}", answer);
             var expectedResult = Demo ? 26397 : 243939;
             Assert(answer, expectedResult);
@@ -75,9 +68,58 @@ namespace AdventOfCode2021
 
         private new void GetResultPart2()
         {
-            var answer = 0;
+            List<char> openCharacters = new List<char> { '(', '[', '{', '<' };
+            List<char> closeCharacters = new List<char> { ')', ']', '}', '>' };
+            List<char[]> lineOpenings = new List<char[]>();
+
+            foreach (string input in IncompleteLines)
+            {
+                List<char> operators = input.ToCharArray().ToList();
+
+                for (int i = 0; i < operators.Count(); i++)
+                {
+                    var closeChar = closeCharacters.IndexOf(operators[i]);
+                    if (closeChar != -1)
+                    {
+                        if (operators[i - 1] != openCharacters[closeChar])
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            operators.RemoveAt(i - 1);
+                            operators.RemoveAt(i - 1);
+                            i = 0; //start from the beginning
+                        }
+                    }
+                }
+
+                lineOpenings.Add(operators.ToArray());
+            }
+
+            Dictionary<char, int> points = new Dictionary<char, int>() { { '(', 1 }, { '[', 2 }, { '{', 3 }, { '<', 4 } };
+            List<long> answerValues = new List<long>();
+
+            foreach (char[] line in lineOpenings)
+            {
+                long linePoints = 0;
+
+                // reverse to get first close on first position (but with opposite char)
+                Array.Reverse(line);
+
+                for (int i = 0; i < line.Length; i++)
+                {
+                    linePoints *= 5;
+                    linePoints += points[line[i]];
+                }
+
+                answerValues.Add(linePoints);
+            }
+
+            long answer = answerValues.OrderByDescending(x => x).ToList()[answerValues.Count / 2];
+
             Log.Information("Part 2 answer: {0}", answer);
-            var expectedResult = Demo ? 1 : 0;
+            var expectedResult = Demo ? 288957 : 2421222841;
             Assert(answer, expectedResult);
         }
     }
