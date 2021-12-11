@@ -46,29 +46,23 @@ namespace AdventOfCode2021
 
         private void AddOneEnergyToAllAdjecentOctopuses(int y, int x)
         {
-            if (GetNumberAtPos(y - 1, x - 1) != -1 && !AlreadyFlashedThisStep[y - 1, x - 1])
-                Map[y - 1, x - 1]++;
+            List<(int, int)> directions = new List<(int destY, int destX)>
+            {
+                (y - 1, x - 1),
+                (y - 1, x),
+                (y - 1, x + 1),
+                (y, x - 1),
+                (y, x + 1),
+                (y + 1, x - 1),
+                (y + 1, x),
+                (y + 1, x + 1)
+            };
 
-            if (GetNumberAtPos(y - 1, x) != -1 && !AlreadyFlashedThisStep[y - 1, x])
-                Map[y - 1, x]++;
-
-            if (GetNumberAtPos(y - 1, x + 1) != -1 && !AlreadyFlashedThisStep[y - 1, x + 1])
-                Map[y - 1, x + 1]++;
-
-            if (GetNumberAtPos(y, x - 1) != -1 && !AlreadyFlashedThisStep[y, x - 1])
-                Map[y, x - 1]++;
-
-            if (GetNumberAtPos(y, x + 1) != -1 && !AlreadyFlashedThisStep[y, x + 1])
-                Map[y, x + 1]++;
-
-            if (GetNumberAtPos(y + 1, x - 1) != -1 && !AlreadyFlashedThisStep[y + 1, x - 1])
-                Map[y + 1, x - 1]++;
-
-            if (GetNumberAtPos(y + 1, x) != -1 && !AlreadyFlashedThisStep[y + 1, x])
-                Map[y + 1, x]++;
-
-            if (GetNumberAtPos(y + 1, x + 1) != -1 && !AlreadyFlashedThisStep[y + 1, x + 1])
-                Map[y + 1, x + 1]++;
+            foreach (var d in directions)
+            {
+                if (GetNumberAtPos(d.Item1, d.Item2) != -1 && !AlreadyFlashedThisStep[d.Item1, d.Item2])
+                    Map[d.Item1, d.Item2]++;
+            }
         }
 
         private new void GetResultPart1()
@@ -142,7 +136,7 @@ namespace AdventOfCode2021
 
         private new void GetResultPart2()
         {
-           //p2 was looked up from console output after increasnig steps
+            //p2 was looked up from console output after increasnig steps
         }
     }
 }
