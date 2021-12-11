@@ -16,4 +16,19 @@ public static class Helpers
             Console.WriteLine();
         }
     }
+
+    public static int[,] Build2DArray(List<string> stringInput)
+    {
+        int[,] map = new int[stringInput.Count, stringInput[0].Length];
+
+        for (int i = 0; i < stringInput.Count; i++)
+        {
+            var line = stringInput[i].ToCharArray();
+            for (int a = 0; a < line.Length; a++)
+            {
+                map[i, a] = line[a] - '0';
+            }
+        }
+        return map;
+    }
 }

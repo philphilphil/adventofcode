@@ -18,25 +18,10 @@ namespace AdventOfCode2021
             this.Demo = demo;
             base.ReadInput(9, Demo);
 
-            Map = BuildMap();
+            Map = Helpers.Build2DArray(InputAsString);
             AlreadyVisited = new bool[Map.GetLength(0), Map.GetLength(1)];
 
             //Helpers.Print2DArray(Map);
-        }
-
-        private int[,] BuildMap()
-        {
-            int[,] map = new int[InputAsString.Count, InputAsString[0].Length];
-
-            for (int i = 0; i < InputAsString.Count; i++)
-            {
-                var line = InputAsString[i].ToCharArray();
-                for (int a = 0; a < line.Length; a++)
-                {
-                    map[i, a] = line[a] - '0';
-                }
-            }
-            return map;
         }
 
         internal void GetResults()
