@@ -34,7 +34,7 @@ namespace AdventOfCode2021
                     Map[y, x]++;
         }
 
-        private Tuple<int, int>? GetFishWithFullEnergy()
+        private Tuple<int, int>? GetOctopusWithFullEnergy()
         {
             for (int y = 0; y < Map.GetLength(0); y++)
                 for (int x = 0; x < Map.GetLength(1); x++)
@@ -81,12 +81,12 @@ namespace AdventOfCode2021
 
                 while (true)
                 {
-                    Tuple<int, int>? fullEnergyFish = GetFishWithFullEnergy();
+                    Tuple<int, int>? fullEnergyOctopus = GetOctopusWithFullEnergy();
 
-                    if (fullEnergyFish == null)
+                    if (fullEnergyOctopus == null)
                         break;
 
-                    flashCount += FlashFish(fullEnergyFish.Item1, fullEnergyFish.Item2, 0);
+                    flashCount += FlashOctopus(fullEnergyOctopus.Item1, fullEnergyOctopus.Item2, 0);
                 }
 
                 //Console.WriteLine("After step " + i);
@@ -106,7 +106,7 @@ namespace AdventOfCode2021
             return Map[row, col];
         }
 
-        private int FlashFish(int y, int x, int flashes)
+        private int FlashOctopus(int y, int x, int flashes)
         {
             if (AlreadyFlashedThisStep[y, x]) return 0;
 
@@ -128,14 +128,14 @@ namespace AdventOfCode2021
                 AlreadyFlashedThisStep[y, x] = true;
             }
 
-            flashes += top > 9 ? FlashFish(y - 1, x, 0) : 0;
-            flashes += left > 9 ? FlashFish(y, x - 1, 0) : 0;
-            flashes += right > 9 ? FlashFish(y, x + 1, 0) : 0;
-            flashes += bottom > 9 ? FlashFish(y + 1, x, 0) : 0;
-            flashes += topLeft > 9 ? FlashFish(y - 1, x - 1, 0) : 0;
-            flashes += topRight > 9 ? FlashFish(y - 1, x + 1, 0) : 0;
-            flashes += bottomLeft > 9 ? FlashFish(y + 1, x - 1, 0) : 0;
-            flashes += bottomRight > 9 ? FlashFish(y + 1, x + 1, 0) : 0;
+            flashes += top > 9 ? FlashOctopus(y - 1, x, 0) : 0;
+            flashes += left > 9 ? FlashOctopus(y, x - 1, 0) : 0;
+            flashes += right > 9 ? FlashOctopus(y, x + 1, 0) : 0;
+            flashes += bottom > 9 ? FlashOctopus(y + 1, x, 0) : 0;
+            flashes += topLeft > 9 ? FlashOctopus(y - 1, x - 1, 0) : 0;
+            flashes += topRight > 9 ? FlashOctopus(y - 1, x + 1, 0) : 0;
+            flashes += bottomLeft > 9 ? FlashOctopus(y + 1, x - 1, 0) : 0;
+            flashes += bottomRight > 9 ? FlashOctopus(y + 1, x + 1, 0) : 0;
 
             return flashes;
         }
