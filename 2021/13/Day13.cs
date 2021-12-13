@@ -36,7 +36,6 @@ namespace AdventOfCode2021
 
         private void FillFoldInstructions()
         {
-            //fold along y=7
             foreach (var item in InputAsString)
             {
                 if (!item.Contains("fold along "))
@@ -73,14 +72,10 @@ namespace AdventOfCode2021
             GetResultPart2();
         }
 
-
         void FoldMap(char axis, int foldAt)
         {
-
             if (axis == 'y')
             {
-                // bool[,] folded = new bool[foldAt,Map.GetLength(1)];
-
                 for (int i = foldAt + 1; i < Map.GetLength(0); i++)
                     for (int x = 0; x < Map.GetLength(1); x++)
                         if (Map[i, x])
@@ -88,8 +83,6 @@ namespace AdventOfCode2021
                             Map[foldAt - (i - foldAt), x] = true;
                             Map[i, x] = false;
                         }
-
-                //  Helpers.Print2DArray(folded);
             }
             else
             {
@@ -100,6 +93,22 @@ namespace AdventOfCode2021
                             Map[x, foldAt - (i - foldAt)] = true;
                             Map[x, i] = false;
                         }
+            }
+        }
+
+        void PrintLetters()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 40; j++)
+                {
+                    var output = ".";
+                    if (Map[i, j] == true)
+                        output = "#";
+
+                    Console.Write("{0}", output);
+                }
+                Console.WriteLine();
             }
         }
 
@@ -124,12 +133,13 @@ namespace AdventOfCode2021
                 FoldMap(fold.Item1, fold.Item2);
 
 
-            Helpers.Print2DArray(Map);
-
             var answer = Map.Cast<bool>().Where(x => x).Count();
-            Log.Information("Part 1 answer: {0}", answer);
-            var expectedResult = Demo ? 17 : 618;
+            Log.Information("Part 2 answer: {0}", answer);
+            var expectedResult = Demo ? 16 : 98;
             Assert(answer, expectedResult);
+
+            if (Demo) Helpers.Print2DArray(Map);
+            if (!Demo) PrintLetters();
         }
     }
 }
