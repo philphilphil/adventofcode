@@ -18,6 +18,26 @@ public static class Helpers
         Console.WriteLine();
     }
 
+    public static void Print2DArray(bool[,] array)
+    {
+        int rowLength = array.GetLength(0);
+        int colLength = array.GetLength(1);
+
+        for (int i = 0; i < 20; i++)
+        {
+            for (int j = 0; j < 90; j++)
+            {
+                var output = ".";
+                if (array[i, j] == true)
+                    output = "#";
+
+                Console.Write("{0}", output);
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+
     public static int[,] Build2DArray(List<string> stringInput)
     {
         int[,] map = new int[stringInput.Count, stringInput[0].Length];

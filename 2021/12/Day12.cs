@@ -11,17 +11,36 @@ namespace AdventOfCode2021
     {
         List<PathWay> Paths = new List<PathWay>();
 
+        Dictionary<string, string[]> Connections = new Dictionary<string, string[]>();
+
         public Day12(bool demo = false)
         {
             this.Demo = demo;
             base.ReadInput(12, Demo);
-            BuildPathList();
+            BuildAllConnections();
         }
 
-        private void BuildPathList()
+        private void BuildAllConnections()
         {
+
+            List<string[]> cons = new List<string[]>();
             foreach (string input in InputAsString)
-                Paths.Add(new PathWay(input));
+            {
+                var caves = input.Split("-");
+                var caveA = caves[0];
+                var caveB = caves[1];
+
+                cons.Add(new[] { caveA, caveB });
+                cons.Add(new[] { caveB, caveA });
+
+            }
+
+            // grouped by "from":
+            // return (
+            //     from p in connections
+            //     group p by p.From into g
+            //     select g
+            // ).ToDictionary(g => g.Key, g => g.Select(connnection => connnection.To).ToArray());
         }
 
         internal void GetResults()
@@ -56,9 +75,9 @@ namespace AdventOfCode2021
 
         private List<PathWay> GetNextPath(string from, string to)
         {
-            var p =  Paths.Where(x => (x.CaveA == to && !x.CaveAIsSmallAndAlreadyVisited) || (x.CaveB == to && !x.CaveBIsSmallAndAlreadyVisited)).ToList();
+            var p = Paths.Where(x => (x.CaveA == to && !x.CaveAIsSmallAndAlreadyVisited) || (x.CaveB == to && !x.CaveBIsSmallAndAlreadyVisited)).ToList();
 
-            return p.Where(x => x.CaveA != from && x.CaveB!= to).ToList();
+            return p.Where(x => x.CaveA != from && x.CaveB != to).ToList();
         }
 
         private new void GetResultPart2()
