@@ -19,7 +19,7 @@ namespace AdventOfCode2021
             if (args.Length == 1 && args[0] == "demo")
                 runWithDemoInput = true;
 
-            var task = new Day13(runWithDemoInput);
+            var task = new Day14(runWithDemoInput);
             task.GetResults();
 
             watch.Stop();
