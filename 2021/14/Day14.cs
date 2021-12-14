@@ -12,12 +12,15 @@ namespace AdventOfCode2021
 
         Dictionary<string, char> PairInsertionRules { get; set; } = new Dictionary<string, char>();
         List<char> PolymerTemplate { get; set; }
+        string PolymerTemplateStr { get; set; }
+
 
         public Day14(bool demo = false)
         {
             this.Demo = demo;
             base.ReadInput(14, Demo);
             PolymerTemplate = InputAsString[0].ToCharArray().ToList();
+            PolymerTemplateStr = InputAsString[0];
             FillPairInsertInRules();
         }
 
@@ -33,7 +36,7 @@ namespace AdventOfCode2021
         internal void GetResults()
         {
             GetResultPart1();
-            //GetResultPart2();
+            GetResultPart2();
         }
 
         private new void GetResultPart1()
@@ -70,7 +73,23 @@ namespace AdventOfCode2021
 
         private new void GetResultPart2()
         {
-            var stepps = 40;
+            var stepps = 10;
+
+            for (int i = 0; i < stepps; i++)
+            {
+                string test = "";
+
+                foreach (var item in PairInsertionRules)
+                {
+                    var replaceValue = item.Key.ToCharArray();
+                    var replaceString = replaceValue[0].ToString() + item.Value.ToString() + replaceValue[1].ToString();
+
+                    if (PolymerTemplateStr.Contains(item.Key))
+                        test += replaceString;
+                }
+
+                PolymerTemplateStr = test;
+            }
 
             // for (int i = 0; i < stepps; i++)
             // {
