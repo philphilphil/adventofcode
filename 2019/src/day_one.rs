@@ -28,14 +28,15 @@ fn part2(data: &String) {
     let mut result: i64 = 0;
 
     for line in data.lines() {
-        let mass = line.parse::<i64>().unwrap();
-        let mut sub: i64 = mass;
+        let mut sub = line.parse::<i64>().unwrap();
 
-        while sub > 0 {
+        loop {
             sub = do_calculations(sub);
 
             if sub > 0 {
                 result += sub;
+            } else {
+                break;
             }
         }
     }
@@ -46,7 +47,6 @@ fn part2(data: &String) {
 
 fn do_calculations(mass: i64) -> i64 {
     let devided: f32 = (mass / 3) as f32;
-    let rounded_down: i32 = devided.floor() as i32;
-    let sub = rounded_down - 2;
-    return sub as i64;
+    let rounded_down: i64 = devided.floor() as i64;
+    rounded_down - 2
 }
