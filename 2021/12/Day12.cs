@@ -56,9 +56,10 @@ namespace AdventOfCode2021
             {
                 var isBigCave = node.value.ToUpper() == node.value;
                 var seen = traversedNodes.Contains(node);
-                if (!seen || isBigCave) // Wenn der Knoten noch nicht markiert wurde
+                if (!seen || isBigCave)
                 {
-                    traversedNodes.Add(node);
+                    if (!isBigCave) traversedNodes.Add(node);
+
                     res += DepthFirstSearch(node, traversedNodes); // Rekursiver Aufruf der Methode mit dem Nachbarknoten als Startknoten
                 }
             }
@@ -126,15 +127,16 @@ namespace AdventOfCode2021
                 }
 
                 directedGraph.ConnectNodes(nodeA, nodeB);
-                directedGraph.ConnectNodes(nodeB, nodeA);
+                // directedGraph.ConnectNodes(nodeB, nodeA);
 
             }
 
-            List<Node> traversedNodes = new List<Node>(); // Liste der Knoten für die Tiefensuche
+            //  List<Node> traversedNodes = new List<Node>(); // Liste der Knoten für die Tiefensuche
             var startNodes = nodes.Where(x => x.value == "start");
 
             foreach (var item in startNodes)
             {
+                List<Node> traversedNodes = new List<Node>();
                 PathCount += DepthFirstSearch(item, traversedNodes); // Aufruf der Methode
             }
 
