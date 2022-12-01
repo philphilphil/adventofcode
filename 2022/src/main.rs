@@ -24,12 +24,20 @@ fn main() {
         run_example = args[1].parse().expect("Can't parse example bool.");
     }
 
-    let input: String = base::load_input(day, run_example);
+    let problem_data = base::ProblemData::new(day, run_example);
+    // dbg!(&problem_data);
 
-    dbg!(&input);
     let day_to_execute = day_to_problem(day).expect("Issue getting problem.");
-    day_to_execute.part_one(&input);
-    day_to_execute.part_two(&input);
+    let result_part1 = day_to_execute.part_one(&problem_data);
+    let result_part2 = day_to_execute.part_two(&problem_data);
+
+    assert_eq!(problem_data.p1_result, result_part1);
+    assert_eq!(problem_data.p2_result, result_part2);
+
+    println!(
+        "Day {}. Part 1: {}, Part 2: {}",
+        args[0], result_part1, result_part2
+    );
 }
 
 fn day_to_problem(day: u8) -> Option<Box<dyn Problem>> {
