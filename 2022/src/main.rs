@@ -1,6 +1,6 @@
 mod base;
 mod day01;
-// mod day02;
+mod day02;
 // mod day03;
 // mod day04;
 // mod day05;
@@ -12,6 +12,7 @@ mod day01;
 
 use base::Problem;
 use day01::Day1;
+use day02::Day2;
 use std::env;
 
 fn main() {
@@ -43,6 +44,7 @@ fn main() {
 fn day_to_problem(day: u8) -> Option<Box<dyn Problem>> {
     match day {
         1 => Some(Box::new(Day1 {})),
+        2 => Some(Box::new(Day2 {})),
         _ => None,
     }
 }
