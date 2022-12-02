@@ -51,7 +51,36 @@ impl Problem for Day2 {
     }
 
     fn part_two(&self, problem_data: &ProblemData) -> String {
-        "".to_owned()
+        let mut score = 0;
+        for line in problem_data.input.lines() {
+            let moves: Vec<&str> = line.split(char::is_whitespace).collect();
+            let enemy_move = string_to_move(moves[0]);
+            let outcome = string_to_outcome(moves[1]);
+
+            match outcome {
+                Outcome::Win => {
+                    match enemy_move {
+                        Move::Rock => score += POINTS[&Move::Paper],
+                        Move::Paper => score += POINTS[&Move::Scicor],
+                        Move::Scicor => score += POINTS[&Move::Rock],
+                    };
+                    score += 6;
+                }
+                Outcome::Loss => {
+                    match enemy_move {
+                        Move::Rock => score += POINTS[&Move::Scicor],
+                        Move::Paper => score += POINTS[&Move::Rock],
+                        Move::Scicor => score += POINTS[&Move::Paper],
+                    };
+                }
+                Outcome::Draw => {
+                    score += POINTS[&enemy_move];
+                    score += 3;
+                }
+            }
+        }
+
+        score.to_string()
     }
 }
 
@@ -60,6 +89,19 @@ fn string_to_move(move_str: &str) -> Move {
         "A" | "X" => Move::Rock,
         "B" | "Y" => Move::Paper,
         "C" | "Z" => Move::Scicor,
+        _ => panic!("no"),
+    }
+}
+enum Outcome {
+    Win,
+    Loss,
+    Draw,
+}
+fn string_to_outcome(outcome_str: &str) -> Outcome {
+    match outcome_str {
+        "X" => Outcome::Loss,
+        "Y" => Outcome::Draw,
+        "Z" => Outcome::Win,
         _ => panic!("no"),
     }
 }
