@@ -1,4 +1,4 @@
-use std::io::BufRead;
+use std::{io::BufRead, slice::Windows};
 
 use crate::base::{Problem, ProblemData};
 
@@ -24,7 +24,26 @@ impl Problem for Day3 {
     }
 
     fn part_two(&self, problem_data: &ProblemData) -> String {
-        "".to_owned()
+        let mut score = 0;
+        let mut line_iter = problem_data.input.lines().peekable();
+        'outer: while let Some(line) = line_iter.next() {
+            let groups_first_content = line.to_owned();
+            let groups_second_content = line_iter.next().unwrap();
+            let groups_third_content = line_iter.next().unwrap();
+
+            for char1 in groups_first_content.chars() {
+                if groups_second_content.contains(char1) {
+                    for _ in groups_second_content.chars() {
+                        if groups_third_content.contains(char1) {
+                            score += char_to_score(char1);
+                            continue 'outer;
+                        }
+                    }
+                }
+            }
+        }
+
+        score.to_string()
     }
 }
 
