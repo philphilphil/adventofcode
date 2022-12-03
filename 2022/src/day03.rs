@@ -12,18 +12,12 @@ impl Problem for Day3 {
             let items_in_1_compartment = &line[..compartment_split_at];
             let items_in_2_compartment = line[compartment_split_at..].chars();
 
-            items_in_2_compartment.for_each(|c| {
-                if items_in_1_compartment.contains(c) {
-                    score += char_to_score(c);
+            for char in items_in_2_compartment {
+                if items_in_1_compartment.contains(char) {
+                    score += char_to_score(char);
+                    break;
                 }
-            });
-
-            // for char in items_in_2_compartment {
-            //     if items_in_1_compartment.contains(char) {
-            //         score += char_to_score(char);
-            //         break;
-            //     }
-            // }
+            }
         }
 
         score.to_string()
