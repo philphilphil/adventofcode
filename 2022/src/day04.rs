@@ -11,14 +11,7 @@ impl Problem for Day4 {
         for line in problem_data.input.lines() {
             let ranges = line_to_ranges(line);
 
-            let p1_in_p2 = ranges.0.intersection(&ranges.1);
-            if p1_in_p2.count() == ranges.0.len() {
-                fully_contained_in_other += 1;
-                continue;
-            }
-
-            let p2_in_p1 = ranges.1.intersection(&ranges.0);
-            if p2_in_p1.count() == ranges.1.len() {
+            if ranges.0.is_subset(&ranges.1) || ranges.1.is_subset(&ranges.0) {
                 fully_contained_in_other += 1;
             }
         }
