@@ -20,17 +20,17 @@ impl Problem for Day4 {
     }
 
     fn part_two(&self, problem_data: &ProblemData) -> String {
-        let mut any_on_other = 0;
+        let mut any_in_other = 0;
 
         for line in problem_data.input.lines() {
             let ranges = line_to_ranges(line).unwrap();
 
             if ranges.0.intersection(&ranges.1).count() > 0 {
-                any_on_other += 1;
+                any_in_other += 1;
             }
         }
 
-        any_on_other.to_string()
+        any_in_other.to_string()
     }
 }
 
