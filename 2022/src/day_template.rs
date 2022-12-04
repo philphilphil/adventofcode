@@ -1,4 +1,4 @@
-use crate::base::Problem;
+use crate::base::{Problem, ProblemData};
 
 pub struct DayX {}
 

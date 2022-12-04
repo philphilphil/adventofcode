@@ -1,5 +1,3 @@
-use std::{io::BufRead, slice::Windows};
-
 use crate::base::{Problem, ProblemData};
 
 pub struct Day3 {}
