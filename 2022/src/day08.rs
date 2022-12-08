@@ -79,8 +79,71 @@ impl Problem for Day8 {
     }
 
     fn part_two(&self, problem_data: &ProblemData) -> String {
-        "".to_owned()
+        let tree_line = get_trees(&problem_data.input);
+        let mut highest_scenic_score = 0;
+
+        for (current_row, row) in tree_line.iter().enumerate() {
+            for (current_col, _) in row.iter().enumerate() {
+                let scenic_score = get_scenic_score_for_tree(&tree_line, current_row, current_col);
+                if scenic_score > highest_scenic_score {
+                    highest_scenic_score = scenic_score;
+                }
+            }
+        }
+
+        highest_scenic_score.to_string()
     }
+}
+
+fn get_scenic_score_for_tree(tree_line: &Vec<Vec<i8>>, curr_row: usize, curr_col: usize) -> i32 {
+    let mut viewdistance_up = 0;
+    let mut viewdistance_down = 0;
+    let mut viewdistance_left = 0;
+    let mut viewdistance_right = 0;
+
+    let tree = get_tree_at(tree_line, curr_row as i32, curr_col as i32).unwrap();
+
+    // check Up
+    let mut search_up: i32 = curr_row as i32 - 1;
+    while let Some(above_tree) = get_tree_at(tree_line, search_up, curr_col as i32) {
+        viewdistance_up += 1;
+        if above_tree >= tree {
+            break;
+        }
+        search_up -= 1;
+    }
+
+    // Check Down
+    let mut search_down: i32 = curr_row as i32 + 1;
+    while let Some(below_tree) = get_tree_at(tree_line, search_down, curr_col as i32) {
+        viewdistance_down += 1;
+        if below_tree >= tree {
+            break;
+        }
+        search_down += 1;
+    }
+
+    // Check Left
+    let mut search_left: i32 = curr_col as i32 - 1;
+    while let Some(left_tree) = get_tree_at(tree_line, curr_row as i32, search_left) {
+        viewdistance_left += 1;
+        if left_tree >= tree {
+            break;
+        }
+        search_left -= 1;
+    }
+
+    // Check Right
+    let mut search_right: i32 = curr_col as i32 + 1;
+    while let Some(right_tree) = get_tree_at(tree_line, curr_row as i32, search_right) {
+        viewdistance_right += 1;
+        if right_tree >= tree {
+            break;
+        }
+        search_right += 1;
+    }
+
+    viewdistance_up * viewdistance_left * viewdistance_right * viewdistance_down
 }
 
 fn get_tree_at(trees: &Vec<Vec<i8>>, row: i32, col: i32) -> Option<i8> {
