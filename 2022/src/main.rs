@@ -8,7 +8,7 @@ mod day06;
 mod day07;
 mod day08;
 mod day09;
-// mod day10;
+mod day10;
 
 use base::Problem;
 use day01::Day1;
@@ -20,6 +20,7 @@ use day06::Day6;
 use day07::Day7;
 use day08::Day8;
 use day09::Day9;
+use day10::Day10;
 use std::env;
 
 fn main() {
@@ -59,6 +60,7 @@ fn day_to_problem(day: u8) -> Option<Box<dyn Problem>> {
         7 => Some(Box::new(Day7 {})),
         8 => Some(Box::new(Day8 {})),
         9 => Some(Box::new(Day9 {})),
+        10 => Some(Box::new(Day10 {})),
         _ => None,
     }
 }
